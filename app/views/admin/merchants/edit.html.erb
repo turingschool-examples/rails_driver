@@ -1,0 +1,14 @@
+<h1>Edit Merchant #<%= @merchant_id %></h1>
+
+<form>
+  name: 
+  <input type="text" name="name" id="merchant_name">
+  <input type="submit" id="merchant_update">
+</form>
+
+<script>
+  let merchant_id = <%= @merchant_id %>
+  let input = $("#merchant_name")[0]
+  let button = $("#merchant_update")
+  addMerchantUpdateHandler(merchant_id, button, input)
+</script>

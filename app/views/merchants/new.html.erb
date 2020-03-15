@@ -1,0 +1,11 @@
+<form>
+  name:
+  <input id="merchant-name" type="text" name="name">
+  <input id="merchant-submit" type="submit">
+</form>
+
+<script>
+  let button = $('#merchant-submit')
+  let input = $('#merchant-name')
+  addMerchantCreateHandler(button, input)
+</script>

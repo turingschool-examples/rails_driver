@@ -1,0 +1,11 @@
+<div id="merchant">
+</div>
+
+<div id="items">
+  <h3>Items sold by this merchant:</h3>
+</div>
+
+<script>
+  loadMerchant(<%= @merchant_id %>, $('#merchant'))
+  loadMerchantItems(<%= @merchant_id %>, $("#items"))
+</script>

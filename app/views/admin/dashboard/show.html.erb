@@ -1,0 +1,36 @@
+<h2>Merchants</h2>
+
+<form class="form-inline my-2 my-lg-0">
+  <input id='merchant-search-input' class="form-control mr-sm-2" type="search" placeholder="merchant name" aria-label="Search">
+  <button id='merchant-search-submit' class="btn btn-outline-success my-2 my-sm-0" type="submit">Search For Merchants</button>
+</form>
+
+<div id="search-results">
+
+</div>
+
+<h3>Top 10 Merchants by Most Revenue</h3>
+<ul id="top-merchants-revenue">
+</ul>
+
+<h3>Top 10 Merchants by Most Items Sold</h3>
+<ul id="top-merchants-items">
+</ul>
+
+<h3>Revenue for the past 7 days:</h3>
+<div id="recent-revenue">
+</div>
+
+<ul id="merchants">
+</ul>
+
+<script>
+debugger;
+  loadMerchantsWithMostRevenue($('#top-merchants-revenue'))
+  loadMerchantsWithMostItemsSold($('#top-merchants-items'))
+  loadRevenueForPastWeek($('#recent-revenue'))
+  var button = $('#merchant-search-submit')
+  var input = $('#merchant-search-input')
+  var results = $('#search-results')
+  addMerchantSearchHandler(button, input, results)
+</script>
