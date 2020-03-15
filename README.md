@@ -15,7 +15,7 @@ First clone the repository and then run the following commands:
 1. `rails db:create && rails db:migrate`
 1. `bundle exec figaro install`
 
-This last command should create the file `config/application.yml`. Open this file and add configuration for the Environment variable `RAILS_ENGINE_DOMAIN`. This should be the url from where Rails Engine is being served. You are only using Rails Driver locally, append this to `config/application.yml`:
+This last command should create the file `config/application.yml`. Open this file and add configuration for the Environment variable `RAILS_ENGINE_DOMAIN`. This should be the url from where Rails Engine is being served. If you are only using Rails Driver locally, append this to `config/application.yml`:
 
 ```
 RAILS_ENGINE_DOMAIN: http://localhost:3000
