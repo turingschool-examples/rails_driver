@@ -31,7 +31,11 @@ the example `config/application.yml` above)
 
 ## Front End
 
-You can also use the Front End to test Rails Engine. The Front End is an example of how your Rails Engine API could be consumed. If you are running Rails Engine on `localhost:3000` as in the examples above, you will need to run Rails Driver on a different port, for example:
+You can also use the Front End to test Rails Engine. The Front End is an example of how your Rails Engine API could be consumed. 
+
+First, you will need to enable Cross Origin Resource Sharing (CORS) on your Rails Engine. Do this using the [Rack CORS](https://github.com/cyu/rack-cors) gem. Folllow the instructions to get this set up (make sure you adding following these instructions for Rails Engine, NOT Rails Driver).
+
+If you are running Rails Engine on `localhost:3000` as in the examples above, you will need to run Rails Driver on a different port, for example:
 
 ```
 rails s -p 3001
