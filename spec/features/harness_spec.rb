@@ -175,7 +175,7 @@ RSpec.describe 'Spec Harness' do
 
       json = JSON.parse(response.body, symbolize_names: true)
 
-      expect(json[:data][:attributes][:revenue].to_f.round(2)).to eq(43198765.58)
+      expect(json[:data][:attributes][:revenue].to_f.round(2)).to eq(43201227.80)
     end
   end
 end
