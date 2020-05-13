@@ -267,13 +267,14 @@ RSpec.describe 'Spec Harness' do
     it 'can get merchants with most revenue' do
       response = conn("/api/v1/merchants/most_revenue?quantity=7").get
       json = JSON.parse(response.body, symbolize_names: true)
+
       expect(json[:data].length).to eq(7)
 
-      expect(json[:data][0][:attributes][:name]).to eq("Dicki-Bednar")
-      expect(json[:data][0][:id]).to eq("14")
+      expect(json[:data][0][:attributes][:name]).to eq("Kassulke, O'Hara and Quitzon")
+      expect(json[:data][0][:id]).to eq("89")
 
-      expect(json[:data][3][:attributes][:name]).to eq("Rath, Gleason and Spencer")
-      expect(json[:data][3][:id]).to eq("53")
+      expect(json[:data][3][:attributes][:name]).to eq("Kozey Group")
+      expect(json[:data][3][:id]).to eq("12")
 
       expect(json[:data][6][:attributes][:name]).to eq("Marvin, Renner and Bauch")
       expect(json[:data][6][:id]).to eq("49")
