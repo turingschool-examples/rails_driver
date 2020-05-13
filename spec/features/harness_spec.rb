@@ -7,99 +7,189 @@ RSpec.describe 'Spec Harness' do
   end
 
   describe 'ReST endpoints' do
-    it 'can get an item' do
-      response = conn('/api/v1/items/179').get
+    describe 'Items' do
+      it 'can get an item' do
+        response = conn('/api/v1/items/179').get
 
-      expected_attributes = {
-        name: 'Item Qui Veritatis',
-        description: 'Totam labore quia harum dicta eum consequatur qui. Corporis inventore consequatur. Illum facilis tempora nihil placeat rerum sint est. Placeat ut aut. Eligendi perspiciatis unde eum sapiente velit.',
-        unit_price: 906.17,
-        merchant_id: 9
-      }
+        expected_attributes = {
+          name: 'Item Qui Veritatis',
+          description: 'Totam labore quia harum dicta eum consequatur qui. Corporis inventore consequatur. Illum facilis tempora nihil placeat rerum sint est. Placeat ut aut. Eligendi perspiciatis unde eum sapiente velit.',
+          unit_price: 906.17,
+          merchant_id: 9
+        }
 
-      json = JSON.parse(response.body, symbolize_names: true)
+        json = JSON.parse(response.body, symbolize_names: true)
 
-      expect(json[:data][:id]).to eq('179')
+        expect(json[:data][:id]).to eq('179')
 
-      expected_attributes.each do |attribute, value|
-        expect(json[:data][:attributes][attribute]).to eq(value)
+        expected_attributes.each do |attribute, value|
+          expect(json[:data][:attributes][attribute]).to eq(value)
+        end
+      end
+
+      it 'can get all items' do
+        response = conn('/api/v1/items').get
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        expect(json[:data].length).to eq(2483)
+        json[:data].each do |item|
+          expect(item[:type]).to eq("item")
+          expect(item[:attributes]).to have_key(:name)
+          expect(item[:attributes]).to have_key(:description)
+          expect(item[:attributes]).to have_key(:unit_price)
+          expect(item[:attributes]).to have_key(:merchant_id)
+        end
+      end
+
+      it 'can create and delete an item' do
+        name = "Shiny Itemy Item"
+        description = "It does a lot of things real good"
+        unit_price = 5011.96
+        merchant_id = 43
+
+        body = {
+          name: name,
+          description: description,
+          unit_price: unit_price,
+          merchant_id: merchant_id
+        }
+
+        # Create a item
+        response = conn('/api/v1/items').post do |request|
+          request.body = body
+        end
+
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        new_item = json[:data]
+        expect(new_item[:attributes][:name]).to eq(name)
+        expect(new_item[:attributes][:description]).to eq(description)
+        expect(new_item[:attributes][:unit_price]).to eq(unit_price)
+        expect(new_item[:attributes][:merchant_id]).to eq(merchant_id)
+
+        # Delete a item
+        delete_response = conn("/api/v1/items/#{new_item[:id]}").delete
+
+        json = JSON.parse(delte_response.body, symbolize_names: true)
+
+        deleted_item = json[:data]
+        expect(deleted_item[:attributes][:name]).to eq(name)
+        expect(deleted_item[:attributes][:description]).to eq(description)
+        expect(deleted_item[:attributes][:unit_price]).to eq(unit_price)
+        expect(deleted_item[:attributes][:merchant_id]).to eq(merchant_id)
+      end
+
+      it 'can update an item' do
+        name = "Shiny Itemy Item"
+        description = "It does a lot of things real good"
+        unit_price = 5011
+        merchant_id = 43
+
+        body = {
+          name: name,
+          description: description,
+          unit_price: unit_price,
+          merchant_id: merchant_id
+        }
+
+        response = conn('/api/v1/items/75').patch do |request|
+          request.body = body
+        end
+
+        json = JSON.parse(response.body, symbolize_names: true)
+        item = json[:data]
+        expect(item[:attributes][:name]).to eq(name)
+        expect(item[:attributes][:description]).to eq(description)
+        expect(item[:attributes][:unit_price]).to eq(unit_price)
+        expect(item[:attributes][:merchant_id]).to eq(merchant_id)
+
+        original_body = {
+          name: 'Item Autem Eligendi',
+          description:'Aliquam dolores dolore voluptas nesciunt non praesentium. Eum nihil repellendus modi. Aut in expedita nesciunt. Ut aliquam dicta omnis voluptas.',
+          unit_price: '29949',
+          merchant_id: '3',
+        }
+        conn("/api/v1/items/").patch do |request|
+          request.body = original_body
+        end
       end
     end
 
-    it 'can get all items' do
-      response = conn('/api/v1/items').get
-      json = JSON.parse(response.body, symbolize_names: true)
+    describe 'Merchants' do
+      it 'can get a merchant' do
+        response = conn('/api/v1/merchants/42').get
 
-      expect(json[:data].length).to eq(2483)
-      json[:data].each do |item|
-        expect(item[:type]).to eq("item")
-        expect(item[:attributes]).to have_key(:name)
-        expect(item[:attributes]).to have_key(:description)
-        expect(item[:attributes]).to have_key(:unit_price)
-        expect(item[:attributes]).to have_key(:merchant_id)
-      end
-    end
+        expected_attributes = {
+          name: 'Glover Inc',
+        }
 
-    it 'can create an item' do
-      name = "Shiny Itemy Item"
-      description = "It does a lot of things real good"
-      unit_price = 5011.96
-      merchant_id = 43
+        json = JSON.parse(response.body, symbolize_names: true)
 
-      body = {
-        name: name,
-        description: description,
-        unit_price: unit_price,
-        merchant_id: merchant_id
-      }
+        expect(json[:data][:id]).to eq('179')
 
-      response = conn('/api/v1/items').post do |request|
-        request.body = body
+        expected_attributes.each do |attribute, value|
+          expect(json[:data][:attributes][attribute]).to eq(value)
+        end
       end
 
-      json = JSON.parse(response.body, symbolize_names: true)
+      it 'can get all merchants' do
+        response = conn('/api/v1/merchants').get
+        json = JSON.parse(response.body, symbolize_names: true)
 
-      new_item = json[:data]
-      expect(new_item[:attributes][:name]).to eq(name)
-      expect(new_item[:attributes][:description]).to eq(description)
-      expect(new_item[:attributes][:unit_price]).to eq(unit_price)
-      expect(new_item[:attributes][:merchant_id]).to eq(merchant_id)
-
-      conn("/api/v1/items/#{new_item[:id]}").delete
-    end
-
-    it 'can update an item' do
-      name = "Shiny Itemy Item"
-      description = "It does a lot of things real good"
-      unit_price = 5011
-      merchant_id = 43
-
-      body = {
-        name: name,
-        description: description,
-        unit_price: unit_price,
-        merchant_id: merchant_id
-      }
-
-      response = conn('/api/v1/items/75').patch do |request|
-        request.body = body
+        expect(json[:data].length).to eq(100)
+        json[:data].each do |merchant|
+          expect(item[:type]).to eq("merchant")
+          expect(item[:attributes]).to have_key(:name)
+        end
       end
 
-      json = JSON.parse(response.body, symbolize_names: true)
-      item = json[:data]
-      expect(item[:attributes][:name]).to eq(name)
-      expect(item[:attributes][:description]).to eq(description)
-      expect(item[:attributes][:unit_price]).to eq(unit_price)
-      expect(item[:attributes][:merchant_id]).to eq(merchant_id)
+      it 'can create and delete a merchant' do
+        name = "Dingle Hoppers"
 
-      original_body = {
-        name: 'Item Autem Eligendi',
-        description:'Aliquam dolores dolore voluptas nesciunt non praesentium. Eum nihil repellendus modi. Aut in expedita nesciunt. Ut aliquam dicta omnis voluptas.',
-        unit_price: '29949',
-        merchant_id: '3',
-      }
-      conn("/api/v1/items/").patch do |request|
-        request.body = original_body
+        body = {
+          name: name
+        }
+
+        # Create a merchant
+        response = conn('/api/v1/merchants').post do |request|
+          request.body = body
+        end
+
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        new_merchant = json[:data]
+        expect(new_merchant[:attributes][:name]).to eq(name)
+
+        # Delete a merchant
+        delete_response = conn("/api/v1/merchants/#{new_merchant[:id]}").delete
+
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        deleted_merchant = json[:data]
+        expect(deleted_merchant[:attributes][:name]).to eq(name)
+      end
+
+      it 'can update a merchant' do
+        name = "Dingle Hoppers"
+
+        body = {
+          name: name,
+        }
+
+        response = conn('/api/v1/merchants/99').patch do |request|
+          request.body = body
+        end
+
+        json = JSON.parse(response.body, symbolize_names: true)
+        item = json[:data]
+        expect(item[:attributes][:name]).to eq(name)
+
+        original_body = {
+          name: 'Fahey-Stiedemann',
+        }
+        conn("/api/v1/merchants/99").patch do |request|
+          request.body = original_body
+        end
       end
     end
   end
@@ -121,12 +211,19 @@ RSpec.describe 'Spec Harness' do
       end
       expect(item_ids.sort).to eq(expected_ids)
     end
+
+    it 'can get merchant for an item' do
+      response = conn('/api/v1/items/209/merchant').get
+      json = JSON.parse(response.body, symbolize_names: true)
+      expected_id = 11
+
+      expect(json[:data][:attributes][:id]).to eq(expected_id)
+    end
   end
 
   describe "search endpoints" do
     it 'can find a list of merchants that contain a fragment, case insensitive' do
       response = conn('/api/v1/merchants/find_all?name=ILL').get
-
       json = JSON.parse(response.body, symbolize_names: true)
 
       names = json[:data].map do |merchant|
@@ -134,6 +231,35 @@ RSpec.describe 'Spec Harness' do
       end
 
       expect(names.sort).to eq(["Schiller, Barrows and Parker", "Tillman Group", "Williamson Group", "Williamson Group", "Willms and Sons"])
+    end
+
+    it 'can find a merchants that contain a fragment, case insensitive' do
+      response = conn('/api/v1/merchants/find?name=ILL').get
+      json = JSON.parse(response.body, symbolize_names: true)
+      name = json[:data][:attribues][:name].downcase
+
+      expect(json[:data].count).to eq(1)
+      expect(name).to include('ill')
+    end
+
+    it 'can find a list of items that contain a fragment, case insensitive' do
+      response = conn('/api/v1/items/find_all?name=haru').get
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      names = json[:data].map do |merchant|
+        merchant[:attributes][:name]
+      end
+
+      expect(names.count).to eq(18)
+    end
+
+    it 'can find an items that contain a fragment, case insensitive' do
+      response = conn('/api/v1/items/find?name=haru').get
+      json = JSON.parse(response.body, symbolize_names: true)
+      name = json[:data][:attribues][:name].downcase
+
+      expect(json[:data].count).to eq(18)
+      expect(name).to include('haru')
     end
   end
 
