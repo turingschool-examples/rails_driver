@@ -39,16 +39,3 @@ function loadRevenueForPastWeek(container) {
     $("#recent-revenue").append(revenueElement)
   })
 }
-
-function addMerchantSearchHandler(button, input, resultsContainer){
-  button.click(function(event){
-    event.preventDefault()
-    let name = input[0].value
-    let uri = `/api/v1/merchants/find_all?name=${name}`
-    resultsContainer.append('<h3>Search Results</h3>')
-    loadMultipleResources(uri, function(merchant){
-      element = merchantListItem(merchant, '/admin/merchants/')
-      resultsContainer.append(element)
-    })
-  })
-}

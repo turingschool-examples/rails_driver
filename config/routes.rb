@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/', to: 'dashboard#show'
+    namespace :merchants do
+      post '/search', to: 'search#index'
+    end
     resources :merchants, only: [:show, :edit]
   end
 
