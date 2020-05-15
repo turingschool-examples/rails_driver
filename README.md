@@ -9,6 +9,10 @@ It includes
 
 ## Set Up
 
+Versions
+- Rails 5.1.7
+- Ruby 2.5.3
+
 First clone the repository and then run the following commands:
 
 1. `bundle` (if this fails, try to `bundle update` and then retry)
