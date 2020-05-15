@@ -1,0 +1,6 @@
+<h1>Search Results for "<%= @search_term %>"</h1>
+<ul>
+  <% @merchants.each do |merchant| %>
+    <li><%= link_to merchant.name, admin_merchant_path(merchant.id) %></li>
+  <% end %>
+</ul>
