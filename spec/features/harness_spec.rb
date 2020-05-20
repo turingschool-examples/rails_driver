@@ -273,14 +273,14 @@ RSpec.describe 'Spec Harness' do
 
       expect(json[:data].length).to eq(7)
 
-      expect(json[:data][0][:attributes][:name]).to eq("Kassulke, O'Hara and Quitzon")
-      expect(json[:data][0][:id]).to eq("89")
+      expect(json[:data][0][:attributes][:name]).to eq("Dicki-Bednar")
+      expect(json[:data][0][:id]).to eq("14")
 
-      expect(json[:data][3][:attributes][:name]).to eq("Kozey Group")
-      expect(json[:data][3][:id]).to eq("12")
+      expect(json[:data][3][:attributes][:name]).to eq("Bechtelar, Jones and Stokes")
+      expect(json[:data][3][:id]).to eq("10")
 
-      expect(json[:data][6][:attributes][:name]).to eq("Marvin, Renner and Bauch")
-      expect(json[:data][6][:id]).to eq("49")
+      expect(json[:data][6][:attributes][:name]).to eq("Rath, Gleason and Spencer")
+      expect(json[:data][6][:id]).to eq("53")
     end
 
     it 'can get merchants who have sold the most items' do
@@ -293,11 +293,11 @@ RSpec.describe 'Spec Harness' do
       expect(json[:data][0][:attributes][:name]).to eq("Kassulke, O'Hara and Quitzon")
       expect(json[:data][0][:id]).to eq("89")
 
-      expect(json[:data][3][:attributes][:name]).to eq("Thiel Inc")
-      expect(json[:data][3][:id]).to eq("22")
+      expect(json[:data][3][:attributes][:name]).to eq("Okuneva, Prohaska and Rolfson")
+      expect(json[:data][3][:id]).to eq("98")
 
-      expect(json[:data][7][:attributes][:name]).to eq("Sporer, Christiansen and Connelly")
-      expect(json[:data][7][:id]).to eq("56")
+      expect(json[:data][7][:attributes][:name]).to eq("Terry-Moore")
+      expect(json[:data][7][:id]).to eq("84")
     end
 
     it 'can get revenue between two dates' do
