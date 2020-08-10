@@ -10,7 +10,7 @@ It includes
 ## Set Up
 
 Versions
-- Rails 5.1.7
+- Rails 5.2.4.3
 - Ruby 2.5.3
 
 First clone the repository and then run the following commands:
@@ -30,12 +30,12 @@ RAILS_ENGINE_DOMAIN: http://localhost:3000
 `spec/features/harness_spec.rb` includes tests for the Rails Engine Project. In order for this test suite to run properly, you will need to:
 
 1. Make sure your Rails Engine Database is seeded with the original data from the provided csv files
-1. Make sure Rails Engine is serving from the url you specified in `config/application.yml` (`localhost:3000` if you copied 
+1. Make sure Rails Engine is serving from the url you specified in `config/application.yml` (`localhost:3000` if you copied
 the example `config/application.yml` above)
 
 ## Front End
 
-You can also use the Front End to test Rails Engine. The Front End is an example of how your Rails Engine API could be consumed. 
+You can also use the Front End to test Rails Engine. The Front End is an example of how your Rails Engine API could be consumed.
 
 First, you will need to enable Cross Origin Resource Sharing (CORS) on your Rails Engine. Do this using the [Rack CORS](https://github.com/cyu/rack-cors) gem. Folllow the instructions to get this set up (make sure you are following these instructions for Rails Engine, NOT Rails Driver).
 

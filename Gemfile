@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.3'
 
-gem 'rails', '5.1.7'
+gem 'rails', '5.2.4.3'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.12'
 gem 'sass-rails', '~> 5.0'
@@ -23,6 +23,9 @@ end
 
 group :test do
   gem 'rspec-rails'
+  gem 'launchy'
+  gem 'simplecov'
+  gem 'capybara'
 end
 
 group :development do
