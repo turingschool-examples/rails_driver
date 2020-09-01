@@ -70,13 +70,8 @@ RSpec.describe 'Spec Harness' do
         # Delete a item
         delete_response = conn("/api/v1/items/#{new_item[:id]}").delete
 
-        json = JSON.parse(delete_response.body, symbolize_names: true)
-
-        deleted_item = json[:data]
-        expect(deleted_item[:attributes][:name]).to eq(name)
-        expect(deleted_item[:attributes][:description]).to eq(description)
-        expect(deleted_item[:attributes][:unit_price]).to eq(unit_price)
-        expect(deleted_item[:attributes][:merchant_id]).to eq(merchant_id)
+        expect(delete_response.body).to be_empty
+        expect(delete_response.status).to eq(204)
       end
 
       it 'can update an item' do
@@ -163,10 +158,8 @@ RSpec.describe 'Spec Harness' do
         # Delete a merchant
         delete_response = conn("/api/v1/merchants/#{new_merchant[:id]}").delete
 
-        json = JSON.parse(response.body, symbolize_names: true)
-
-        deleted_merchant = json[:data]
-        expect(deleted_merchant[:attributes][:name]).to eq(name)
+        expect(delete_response.body).to be_empty
+        expect(delete_response.status).to eq(204)
       end
 
       it 'can update a merchant' do
