@@ -206,7 +206,7 @@ RSpec.describe 'Spec Harness' do
     end
 
     it 'can get merchant for an item' do
-      response = conn('/api/v1/items/209/merchant').get
+      response = conn('/api/v1/items/209/merchants').get
       json = JSON.parse(response.body, symbolize_names: true)
       expected_id = '11'
 
