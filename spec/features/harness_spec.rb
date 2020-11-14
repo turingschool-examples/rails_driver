@@ -252,9 +252,9 @@ RSpec.describe 'Spec Harness' do
     it 'can find an items that contain a fragment, case insensitive' do
       response = conn('/api/v1/items/find?name=haru').get
       json = JSON.parse(response.body, symbolize_names: true)
-      name = json[:data][:attributes][:name].downcase
-
       expect(json[:data]).to be_a(Hash)
+
+      name = json[:data][:attributes][:name].downcase
       expect(name).to include('haru')
     end
   end
@@ -299,6 +299,14 @@ RSpec.describe 'Spec Harness' do
       json = JSON.parse(response.body, symbolize_names: true)
 
       expect(json[:data][:attributes][:revenue].to_f.round(2)).to eq(43201227.80)
+    end
+    
+    it 'can get revenue of a single merchant' do
+      response = conn("/api/v1/merchants/42/revenue").get
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(json[:data][:id]).to be_nil
+      expect(json[:data][:attributes][:revenue].to_f.round(2)).to eq(532613.98)
     end
   end
 end
